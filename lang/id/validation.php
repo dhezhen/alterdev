@@ -1,0 +1,60 @@
+<?php
+
+// Pesan validasi Bahasa Indonesia (kunci yang tidak ada di sini memakai bahasa Inggris)
+return [
+    'after_or_equal' => ':Attribute harus tanggal setelah atau sama dengan :date.',
+    'alpha_dash' => ':Attribute hanya boleh berisi huruf, angka, tanda hubung, dan garis bawah.',
+    'before_or_equal' => ':Attribute harus tanggal sebelum atau sama dengan :date.',
+    'between' => [
+        'numeric' => ':Attribute harus bernilai antara :min dan :max.',
+        'string' => ':Attribute harus terdiri dari :min sampai :max karakter.',
+    ],
+    'confirmed' => 'Konfirmasi :attribute tidak cocok.',
+    'current_password' => 'Password salah.',
+    'date' => ':Attribute bukan tanggal yang valid.',
+    'email' => ':Attribute harus berupa alamat email yang valid.',
+    'image' => ':Attribute harus berupa gambar.',
+    'in' => ':Attribute yang dipilih tidak valid.',
+    'integer' => ':Attribute harus berupa bilangan bulat.',
+    'max' => [
+        'file' => ':Attribute tidak boleh lebih dari :max kilobita.',
+        'numeric' => ':Attribute tidak boleh lebih dari :max.',
+        'string' => ':Attribute tidak boleh lebih dari :max karakter.',
+    ],
+    'mimes' => ':Attribute harus berupa berkas berjenis: :values.',
+    'min' => [
+        'numeric' => ':Attribute minimal bernilai :min.',
+        'string' => ':Attribute minimal berisi :min karakter.',
+    ],
+    'password' => [
+        'letters' => ':Attribute harus mengandung setidaknya satu huruf.',
+        'mixed' => ':Attribute harus mengandung setidaknya satu huruf besar dan satu huruf kecil.',
+        'numbers' => ':Attribute harus mengandung setidaknya satu angka.',
+        'symbols' => ':Attribute harus mengandung setidaknya satu simbol.',
+        'uncompromised' => ':Attribute yang diberikan pernah bocor. Silakan gunakan :attribute lain.',
+    ],
+    'prohibited' => 'Isian :attribute tidak diizinkan.',
+    'regex' => 'Format :attribute tidak valid.',
+    'required' => ':Attribute wajib diisi.',
+    'required_with' => ':Attribute wajib diisi bila :values diisi.',
+    'string' => ':Attribute harus berupa teks.',
+    'unique' => ':Attribute sudah digunakan.',
+    'uploaded' => ':Attribute gagal diunggah.',
+    'url' => 'Format :attribute tidak valid.',
+
+    'attributes' => [
+        'name' => 'nama',
+        'email' => 'email',
+        'password' => 'password',
+        'phone' => 'nomor HP',
+        'message' => 'pesan',
+        'title' => 'judul',
+        'slug' => 'slug',
+        'category' => 'kategori',
+        'sort_order' => 'urutan',
+        'url' => 'tautan',
+        'linkedin' => 'URL LinkedIn',
+        'position' => 'jabatan',
+        'site_name' => 'nama situs',
+    ],
+];

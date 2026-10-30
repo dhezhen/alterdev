@@ -1,0 +1,19 @@
+# Folder unggahan: larang eksekusi skrip apa pun, hanya sajikan berkas statis.
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "\.(?i:php\d?|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp|html?|svg|js)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
