@@ -33,7 +33,7 @@
     <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=5">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=8">
 </head>
 <body>
 <div class="admin">
@@ -76,7 +76,7 @@
             </div>
         </header>
 
-        <main class="content">
+        <main class="content @yield('content-class')">
             @if (session('success'))
                 <div class="alert alert-success" role="status">{{ session('success') }}</div>
             @endif

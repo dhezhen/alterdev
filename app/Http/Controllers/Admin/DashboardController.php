@@ -9,12 +9,34 @@ use App\Models\Post;
 use App\Models\Service;
 use App\Models\TrainingRegistration;
 use App\Models\TrainingSchedule;
+use App\Models\WebsiteVisit;
 
 class DashboardController extends Controller
 {
     public function __invoke()
     {
+        $today = today();
+        $startDate = $today->copy()->subDays(29)->toDateString();
+        $visitorsByDate = WebsiteVisit::query()
+            ->whereBetween('visit_date', [$startDate, $today->toDateString()])
+            ->selectRaw('visit_date, COUNT(*) as total')
+            ->groupBy('visit_date')
+            ->pluck('total', 'visit_date');
+        $visitorDays = collect(range(29, 0))->map(function (int $daysAgo) use ($today, $visitorsByDate) {
+            $date = $today->copy()->subDays($daysAgo);
+
+            return [
+                'date' => $date->toDateString(),
+                'label' => $date->translatedFormat('j M'),
+                'count' => (int) $visitorsByDate->get($date->toDateString(), 0),
+            ];
+        });
+
         return view('admin.dashboard', [
+            'visitorDays' => $visitorDays,
+            'visitorTotal' => $visitorDays->sum('count'),
+            'visitorsToday' => (int) $visitorsByDate->get($today->toDateString(), 0),
+            'visitorChartMax' => max(1, $visitorDays->max('count')),
             'stats' => [
                 ['Pesan baru', Message::where('status', 'new')->count(), 'inbox', route('admin.messages.index', ['status' => 'new'])],
                 ['Pendaftar menunggu', TrainingRegistration::where('status', 'pending')->count(), 'user-plus', route('admin.registrations.index', ['status' => 'pending'])],

@@ -7,7 +7,7 @@
     <title>Masuk — Admin {{ $site['site_name'] }}</title>
     <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=5">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=8">
 </head>
 <body>
 <main class="auth">

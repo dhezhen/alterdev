@@ -9,6 +9,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Middleware\TrackWebsiteVisit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,32 +17,34 @@ use Illuminate\Support\Facades\Route;
 | Website publik
 |--------------------------------------------------------------------------
 */
-Route::get('/', HomeController::class)->name('home');
+Route::middleware(TrackWebsiteVisit::class)->group(function () {
+    Route::get('/', HomeController::class)->name('home');
 
-Route::get('/layanan', [ServiceController::class, 'index'])->name('services.index');
-Route::get('/layanan/{service}', [ServiceController::class, 'show'])->name('services.show');
+    Route::get('/layanan', [ServiceController::class, 'index'])->name('services.index');
+    Route::get('/layanan/{service}', [ServiceController::class, 'show'])->name('services.show');
 
-Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portfolios.index');
-Route::get('/portofolio/{portfolio}', [PortfolioController::class, 'show'])->name('portfolios.show');
+    Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portfolios.index');
+    Route::get('/portofolio/{portfolio}', [PortfolioController::class, 'show'])->name('portfolios.show');
 
-Route::get('/pelatihan', [TrainingController::class, 'index'])->name('trainings.index');
-Route::get('/pelatihan/{training}', [TrainingController::class, 'show'])->name('trainings.show');
-Route::post('/pelatihan/jadwal/{schedule}/daftar', [TrainingController::class, 'register'])
-    ->middleware('throttle:10,1')
-    ->name('trainings.register');
-Route::get('/pelatihan/pendaftaran/{code}', [TrainingController::class, 'registered'])
-    ->middleware('throttle:30,1')
-    ->where('code', '[A-Z0-9\-]{8,20}')
-    ->name('trainings.registered');
+    Route::get('/pelatihan', [TrainingController::class, 'index'])->name('trainings.index');
+    Route::get('/pelatihan/{training}', [TrainingController::class, 'show'])->name('trainings.show');
+    Route::post('/pelatihan/jadwal/{schedule}/daftar', [TrainingController::class, 'register'])
+        ->middleware('throttle:10,1')
+        ->name('trainings.register');
+    Route::get('/pelatihan/pendaftaran/{code}', [TrainingController::class, 'registered'])
+        ->middleware('throttle:30,1')
+        ->where('code', '[A-Z0-9\-]{8,20}')
+        ->name('trainings.registered');
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/tentang-kami', [PageController::class, 'about'])->name('about');
-Route::get('/kontak', [ContactController::class, 'show'])->name('contact');
-Route::post('/kontak', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
+    Route::get('/tentang-kami', [PageController::class, 'about'])->name('about');
+    Route::get('/kontak', [ContactController::class, 'show'])->name('contact');
+    Route::post('/kontak', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
-Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap');
+    Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap');
+});
 
 /*
 |--------------------------------------------------------------------------
