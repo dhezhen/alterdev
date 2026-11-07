@@ -2,6 +2,19 @@
 document.addEventListener('DOMContentLoaded', function () {
   var sidebar = document.getElementById('sidebar');
   var toggle = document.querySelector('[data-sidebar-toggle]');
+  var menuGroups = document.querySelectorAll('[data-menu-group]');
+  var menuBreakpoint = window.matchMedia('(max-width: 900px)');
+
+  function syncMenuGroups() {
+    menuGroups.forEach(function (group) {
+      group.open = !menuBreakpoint.matches || group.hasAttribute('data-active');
+    });
+  }
+
+  syncMenuGroups();
+  if (menuBreakpoint.addEventListener) {
+    menuBreakpoint.addEventListener('change', syncMenuGroups);
+  }
 
   if (sidebar && toggle) {
     toggle.addEventListener('click', function (e) {

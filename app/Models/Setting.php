@@ -31,9 +31,10 @@ class Setting extends Model
             'about_mission' => ['Misi (satu baris satu poin)', 'textarea', "Membangun solusi digital yang sederhana dan tepat guna\nMendampingi klien sampai sistem benar-benar digunakan\nMeningkatkan literasi digital melalui pelatihan yang praktis"],
         ],
         'Kontak' => [
-            'contact_whatsapp' => ['Nomor WhatsApp (format 62xxx)', 'text', '[NO. WHATSAPP]'],
+            'contact_whatsapp' => ['WhatsApp utama', 'text', '+62 831-9976-6610'],
+            'contact_whatsapp_secondary' => ['WhatsApp kedua', 'text', '+62 896-0694-1238'],
             'contact_email' => ['Email', 'text', '[EMAIL]@alterdev.id'],
-            'contact_address' => ['Alamat kantor', 'textarea', '[ALAMAT KANTOR]'],
+            'contact_address' => ['Lokasi', 'textarea', 'Kuningan, Jawa Barat'],
             'contact_hours' => ['Jam layanan', 'text', 'Senin – Jumat, 08.00 – 17.00 WIB'],
             'social_instagram' => ['URL Instagram', 'text', ''],
             'social_linkedin' => ['URL LinkedIn', 'text', ''],

@@ -93,9 +93,8 @@ p { margin: 0; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px 12px 20px; border-radius: 22px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
 .brand:hover { color: var(--ink); }
-.brand-mark { width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center; color: var(--accent); }
-.brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; display: block; line-height: 1.15; }
-.brand-tag { font-size: 11px; font-weight: 500; color: var(--muted-2); display: block; }
+.brand-logo { display: block; width: 168px; height: 42px; object-fit: contain; border-radius: 6px; }
+.footer-logo { display: block; width: 170px; height: auto; border-radius: 6px; }
 .nav-links { display: flex; gap: 24px; font-size: 15px; font-weight: 500; }
 .nav-links a { color: #3B4558; text-decoration: none; padding: 6px 0; }
 .nav-links a:hover, .nav-links a.active { color: var(--accent); }

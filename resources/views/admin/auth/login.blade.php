@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Masuk — Admin {{ $site['site_name'] }}</title>
-    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=5">
 </head>
 <body>
 <main class="auth">
     <div class="auth-card">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px">
-            <span style="width: 44px; height: 44px; border-radius: 12px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center"><x-icon name="code" size="22" stroke="2.2" /></span>
+            <img src="{{ asset('images/alterdev-logo-horizontal.png') }}" alt="{{ $site['site_name'] }}" style="width: 170px; height: auto; border-radius: 6px">
             <div>
                 <h1 style="font-size: 20px">Panel Admin</h1>
-                <p style="color: var(--muted); font-size: 13px">{{ $site['site_name'] }}</p>
             </div>
         </div>
 

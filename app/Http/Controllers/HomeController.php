@@ -7,7 +7,6 @@ use App\Models\Portfolio;
 use App\Models\Post;
 use App\Models\Service;
 use App\Models\Testimonial;
-use App\Models\Training;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,7 +18,6 @@ class HomeController extends Controller
 
         return view('home', [
             'services' => Service::active()->ordered()->get(),
-            'trainings' => Training::active()->ordered()->take(6)->get(),
             'portfolios' => Portfolio::active()
                 ->when($category, fn ($q) => $q->where('category', $category))
                 ->orderByDesc('is_featured')->ordered()->take(6)->get(),

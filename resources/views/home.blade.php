@@ -53,8 +53,8 @@
     <div class="container">
         <div class="section-head center">
             <span class="eyebrow">Layanan Kami</span>
-            <h2 class="title-lg">Sederhana, tepat guna, dan mudah digunakan</h2>
-            <p class="lead" style="font-size: 17px">Kami fokus pada layanan yang paling sering dibutuhkan usaha dan lembaga. Tidak berlebihan, tidak rumit — cukup yang benar-benar Anda perlukan.</p>
+            <h2 class="title-lg">Solusi digital untuk kebutuhan Anda</h2>
+            <p class="lead" style="font-size: 17px">Kami membuat website, sistem informasi berbasis mobile, dan aplikasi mobile yang dirancang sesuai kebutuhan serta cara kerja Anda.</p>
         </div>
         <div class="grid grid-4">
             @foreach ($services as $service)
@@ -71,32 +71,6 @@
         </div>
     </div>
 </section>
-
-{{-- PELATIHAN --}}
-@if ($trainings->isNotEmpty())
-<section class="section" id="pelatihan">
-    <div class="container">
-        <div class="box glass stack" style="gap: 40px">
-            <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between">
-                <div class="stack" style="flex: 1 1 520px; min-width: 0">
-                    <span class="eyebrow">Program Pelatihan IT</span>
-                    <h2 class="title-lg">Belajar teknologi tanpa takut, langsung bisa dipraktikkan</h2>
-                    <p class="lead" style="font-size: 17px">Cocok untuk guru, staf administrasi, pelaku UMKM, mahasiswa, hingga aparatur desa. Pelatihan bisa diadakan di lokasi Anda, secara daring, atau di tempat yang disepakati.</p>
-                </div>
-                <a href="{{ route('trainings.index') }}" class="btn btn-primary">Lihat Jadwal Pelatihan</a>
-            </div>
-            <div class="grid grid-4" style="gap: 20px">
-                @foreach ($trainings as $training)
-                    <a href="{{ route('trainings.show', $training) }}" class="mini-card neu-sm">
-                        <span class="icon-box sm neu-in"><x-icon :name="$training->icon" size="21" stroke="2" /></span>
-                        <span><strong>{{ $training->title }}</strong><span class="desc">{{ $training->summary }}</span></span>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</section>
-@endif
 
 {{-- PENDIDIKAN --}}
 <section class="section" id="pendidikan">

@@ -30,23 +30,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>@yield('title', 'Dasbor') — Admin {{ $site['site_name'] }}</title>
-    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=5">
 </head>
 <body>
 <div class="admin">
     <aside class="sidebar" id="sidebar" aria-label="Menu admin">
-        <a href="{{ route('admin.dashboard') }}" class="brand"><span class="mark"><x-icon name="code" size="18" stroke="2.2" /></span>{{ $site['site_name'] }}</a>
+        <a href="{{ route('admin.dashboard') }}" class="brand"><img src="{{ asset('images/alterdev-logo-horizontal.png') }}" alt="{{ $site['site_name'] }}" class="brand-logo"></a>
         @foreach ($menu as $group => $items)
-            <span class="group">{{ $group }}</span>
-            @foreach ($items as [$route, $label, $icon, $pattern, $count])
-                <a href="{{ route($route) }}" @class(['item', 'active' => request()->routeIs($pattern)])>
-                    <x-icon :name="$icon" size="18" stroke="2" />{{ $label }}
-                    @if ($count)<span class="count">{{ $count }}</span>@endif
-                </a>
-            @endforeach
+            @php
+                $groupId = 'admin-group-'.\Illuminate\Support\Str::slug($group);
+                $groupIsActive = collect($items)->contains(fn ($item) => request()->routeIs($item[3]));
+            @endphp
+            <details class="menu-group" data-menu-group @if ($groupIsActive) data-active @endif open>
+                <summary class="group-toggle" aria-controls="{{ $groupId }}">
+                    <span class="group">{{ $group }}</span>
+                    <span class="group-caret" aria-hidden="true"></span>
+                </summary>
+                <div class="group-links" id="{{ $groupId }}">
+                    @foreach ($items as [$route, $label, $icon, $pattern, $count])
+                        <a href="{{ route($route) }}" @class(['item', 'active' => request()->routeIs($pattern)])>
+                            <x-icon :name="$icon" size="18" stroke="2" />{{ $label }}
+                            @if ($count)<span class="count">{{ $count }}</span>@endif
+                        </a>
+                    @endforeach
+                </div>
+            </details>
         @endforeach
         <span class="group">Situs</span>
         <a href="{{ route('home') }}" class="item" target="_blank" rel="noopener"><x-icon name="external" size="18" stroke="2" />Lihat Website</a>
@@ -80,6 +91,6 @@
         </main>
     </div>
 </div>
-<script src="{{ asset('js/admin.js') }}?v=2" defer></script>
+<script src="{{ asset('js/admin.js') }}?v=3" defer></script>
 </body>
 </html>

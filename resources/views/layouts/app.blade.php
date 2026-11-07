@@ -26,11 +26,11 @@
     <meta property="og:description" content="{{ \Illuminate\Support\Str::limit($metaDescription, 160) }}">
     <meta property="og:url" content="{{ url()->current() }}">
     @hasSection('og_image')<meta property="og:image" content="@yield('og_image')">@endif
-    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=2">
     @stack('head')
 </head>
 <body>
@@ -43,11 +43,7 @@
         <div class="container">
             <nav class="nav glass" aria-label="Navigasi utama">
                 <a href="{{ route('home') }}" class="brand">
-                    <span class="brand-mark neu-sm"><x-icon name="code" size="22" stroke="2" /></span>
-                    <span>
-                        <span class="brand-name">{{ \Illuminate\Support\Str::before($site['site_name'], '.') }}@if(str_contains($site['site_name'], '.'))<span class="accent">.{{ \Illuminate\Support\Str::after($site['site_name'], '.') }}</span>@endif</span>
-                        <span class="brand-tag">{{ $site['site_tagline'] }}</span>
-                    </span>
+                    <img src="{{ asset('images/alterdev-logo-horizontal.png') }}" alt="{{ $site['site_name'] }}" class="brand-logo">
                 </a>
                 <button type="button" class="nav-toggle neu-sm" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-links" data-nav-toggle>
                     <x-icon name="menu" size="22" stroke="2" />
@@ -70,7 +66,7 @@
         <div class="container">
             <div class="footer-box neu">
                 <div class="footer-col" style="flex: 1 1 260px; min-width: 0">
-                    <span style="font-weight: 800; font-size: 22px">{{ \Illuminate\Support\Str::before($site['site_name'], '.') }}@if(str_contains($site['site_name'], '.'))<span class="accent">.{{ \Illuminate\Support\Str::after($site['site_name'], '.') }}</span>@endif</span>
+                    <img src="{{ asset('images/alterdev-logo-horizontal.png') }}" alt="{{ $site['site_name'] }}" class="footer-logo">
                     <span style="font-weight: 600; color: #3B4558">{{ $site['site_tagline'] }}</span>
                     <span class="small" style="max-width: 300px; line-height: 1.65">{{ $site['site_description'] }}</span>
                     <div class="socials">
@@ -98,6 +94,9 @@
                 <div class="footer-col" style="flex: 0 1 240px; color: var(--muted-2)">
                     <span class="head">Kontak</span>
                     <span>{{ $site['contact_whatsapp'] }}</span>
+                    @if (! empty($site['contact_whatsapp_secondary']))
+                        <span>{{ $site['contact_whatsapp_secondary'] }}</span>
+                    @endif
                     <span>{{ $site['contact_email'] }}</span>
                     <span>{{ $site['contact_address'] }}</span>
                     <span>{{ $site['contact_hours'] }}</span>
