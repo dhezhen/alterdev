@@ -12,13 +12,14 @@ class Service extends Model
 
     protected $fillable = [
         'title', 'slug', 'icon', 'short_description', 'description',
-        'features', 'price_label', 'portfolio_category', 'sort_order', 'is_active',
+        'features', 'price_label', 'pricing_packages', 'portfolio_category', 'sort_order', 'is_active',
     ];
 
     protected function casts(): array
     {
         return [
             'features' => 'array',
+            'pricing_packages' => 'array',
             'is_active' => 'boolean',
         ];
     }

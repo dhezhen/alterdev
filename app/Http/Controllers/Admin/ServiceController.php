@@ -60,12 +60,37 @@ class ServiceController extends Controller
             'description' => ['nullable', 'string'],
             'features_text' => ['nullable', 'string', 'max:2000'],
             'price_label' => ['nullable', 'string', 'max:120'],
+            'packages' => ['nullable', 'array', 'max:10'],
+            'packages.*.name' => ['nullable', 'string', 'max:100'],
+            'packages.*.summary' => ['nullable', 'string', 'max:255'],
+            'packages.*.price' => ['nullable', 'integer', 'min:0', 'max:9999999999'],
+            'packages.*.core_price' => ['nullable', 'integer', 'min:0', 'max:9999999999'],
+            'packages.*.features_text' => ['nullable', 'string', 'max:2000'],
+            'packages.*.services_text' => ['nullable', 'string', 'max:2000'],
+            'packages.*.is_published' => ['nullable', 'boolean'],
             'portfolio_category' => ['nullable', Rule::in(Portfolio::CATEGORIES)],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ], [], ['title' => 'judul', 'short_description' => 'deskripsi singkat']);
 
         $data['features'] = $this->linesToArray($data['features_text'] ?? '');
         unset($data['features_text']);
+        $data['pricing_packages'] = collect($data['packages'] ?? [])
+            ->values()
+            ->map(function (array $package): array {
+                return [
+                    'name' => trim($package['name'] ?? ''),
+                    'summary' => trim($package['summary'] ?? ''),
+                    'price' => ($package['price'] ?? '') !== '' ? (int) $package['price'] : null,
+                    'core_price' => ($package['core_price'] ?? '') !== '' ? (int) $package['core_price'] : null,
+                    'features' => $this->linesToArray($package['features_text'] ?? ''),
+                    'services' => $this->linesToArray($package['services_text'] ?? ''),
+                    'is_published' => filter_var($package['is_published'] ?? false, FILTER_VALIDATE_BOOLEAN),
+                ];
+            })
+            ->filter(fn (array $package) => $package['name'] !== '')
+            ->values()
+            ->all();
+        unset($data['packages']);
         $data['sort_order'] = $data['sort_order'] ?? 0;
         $data['is_active'] = $request->boolean('is_active');
 
