@@ -33,7 +33,7 @@
     <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=9">
 </head>
 <body>
 <div class="admin">
@@ -91,6 +91,6 @@
         </main>
     </div>
 </div>
-<script src="{{ asset('js/admin.js') }}?v=3" defer></script>
+<script src="{{ asset('js/admin.js') }}?v=4" defer></script>
 </body>
 </html>

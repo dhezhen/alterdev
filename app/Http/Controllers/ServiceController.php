@@ -25,6 +25,7 @@ class ServiceController extends Controller
 
         return view('services.show', [
             'service' => $service,
+            'pricingPackages' => $service->publishedPricingPackages(),
             'others' => Service::active()->ordered()->whereKeyNot($service->id)->get(),
             'related' => $related,
         ]);

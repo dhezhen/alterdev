@@ -19,7 +19,9 @@
                     <span class="icon-box neu-in" style="width: 64px; height: 64px"><x-icon :name="$service->icon" size="30" stroke="1.8" /></span>
                     <h2 class="title-md">{{ $service->title }}</h2>
                     <p class="text">{{ $service->short_description }}</p>
-                    @if ($service->price_label)
+                    @if ($service->startingPricingPackage())
+                        <p class="small"><strong class="accent">Mulai {{ $service->startingPricingPackage()['price_display'] ?: 'Rp'.number_format((int) $service->startingPricingPackage()['price'], 0, ',', '.') }}</strong></p>
+                    @elseif ($service->price_label)
                         <p class="small"><strong class="accent">{{ $service->price_label }}</strong></p>
                     @endif
                     <div style="display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px">

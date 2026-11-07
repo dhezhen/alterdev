@@ -16,6 +16,28 @@ document.addEventListener('DOMContentLoaded', function () {
     menuBreakpoint.addEventListener('change', syncMenuGroups);
   }
 
+  document.querySelectorAll('[data-package-editor]').forEach(function (editor) {
+    var list = editor.querySelector('[data-package-list]');
+    var template = editor.querySelector('[data-package-template]');
+    var addButton = editor.querySelector('[data-add-package]');
+    var nextIndex = Number(editor.dataset.nextIndex || 0);
+
+    if (list && template && addButton) {
+      addButton.addEventListener('click', function () {
+        var rowTemplate = document.createElement('template');
+        rowTemplate.innerHTML = template.innerHTML.replaceAll('__INDEX__', String(nextIndex++));
+        list.appendChild(rowTemplate.content);
+      });
+
+      editor.addEventListener('click', function (event) {
+        var removeButton = event.target.closest('[data-remove-package]');
+        if (removeButton) {
+          removeButton.closest('[data-package-row]').remove();
+        }
+      });
+    }
+  });
+
   if (sidebar && toggle) {
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();

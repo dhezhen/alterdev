@@ -26,7 +26,9 @@
                         @foreach ($service->features as $feature)<li>{{ $feature }}</li>@endforeach
                     </ul>
                 @endif
-                @if ($service->price_label)
+                @if ($service->startingPricingPackage())
+                    <p class="small"><strong class="accent">Mulai {{ $service->startingPricingPackage()['price_display'] ?: 'Rp'.number_format((int) $service->startingPricingPackage()['price'], 0, ',', '.') }}</strong></p>
+                @elseif ($service->price_label)
                     <p class="small"><strong class="accent">{{ $service->price_label }}</strong></p>
                 @endif
                 <a href="{{ route('contact', ['layanan' => $service->title]) }}" class="btn btn-primary">Konsultasi Gratis</a>
@@ -44,6 +46,63 @@
         </aside>
     </div>
 </section>
+
+@if (count($pricingPackages))
+<section class="section pricing-section">
+    <div class="container">
+        <div class="section-head center pricing-section-head">
+            <p class="pricing-intro-copy">Kami punya {{ count($pricingPackages) }} pilihan paket yang fleksibel dan sesuai dengan kebutuhan. Tinggal pilih yang paling pas buat bisnismu.</p>
+        </div>
+        <div class="grid grid-3 pricing-grid">
+            @foreach ($pricingPackages as $package)
+                <article class="box price-package price-package--{{ $package['accent_color'] ?? 'blue' }}">
+                    <div class="package-heading">
+                        <h3>{{ $package['name'] }}</h3>
+                        @if (! empty($package['summary']))<p class="small">{{ $package['summary'] }}</p>@endif
+                    </div>
+                    <div class="package-pricing">
+                        @if (! empty($package['price_kicker']))<p class="package-kicker">{{ $package['price_kicker'] }}</p>@endif
+                        @if (! empty($package['compare_price']) || ! empty($package['compare_price_display']) || ! empty($package['discount_label']))
+                            <p class="package-discount-line">
+                                @if (! empty($package['compare_price_display']))
+                                    <s>{{ $package['compare_price_display'] }}</s>
+                                @elseif (! empty($package['compare_price']))
+                                    <s>Rp{{ number_format((int) $package['compare_price'], 0, ',', '.') }},-</s>
+                                @endif
+                                @if (! empty($package['discount_label']))<strong>{{ $package['discount_label'] }}</strong>@endif
+                            </p>
+                        @endif
+                        @if (is_numeric($package['price'] ?? null))
+                            <p class="package-price">{{ $package['price_display'] ?: 'Rp'.number_format((int) $package['price'], 0, ',', '.') }}</p>
+                        @else
+                            <p class="package-price">Harga konsultasi</p>
+                        @endif
+                        @if (! empty($package['price_note']))<p class="package-price-note">{{ $package['price_note'] }}</p>@endif
+                    </div>
+                    @if (! empty($package['features']) || ! empty($package['excluded_features']))
+                        <ul class="package-features">
+                            @foreach ($package['features'] ?? [] as $feature)
+                                <li class="is-included"><span aria-hidden="true">✓</span><span>{{ $feature }}</span></li>
+                            @endforeach
+                            @foreach ($package['excluded_features'] ?? [] as $feature)
+                                <li class="is-excluded"><span aria-hidden="true">×</span><s>{{ $feature }}</s></li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    @if (! empty($package['services']))
+                        <div class="package-list">
+                            <strong>Layanan termasuk</strong>
+                            <ul>@foreach ($package['services'] as $item)<li>{{ $item }}</li>@endforeach</ul>
+                        </div>
+                    @endif
+                    @if (! empty($package['renewal_label']))<p class="package-renewal">{{ $package['renewal_label'] }}</p>@endif
+                    <a href="{{ route('contact', ['layanan' => $service->title]) }}" class="btn package-cta">Pilih Paket</a>
+                </article>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 @if ($related->isNotEmpty())
 <section class="section">
