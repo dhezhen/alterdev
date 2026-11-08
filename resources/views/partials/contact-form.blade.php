@@ -35,7 +35,7 @@
             @error('service')<span class="error">{{ $message }}</span>@enderror
         </label>
     </div>
-    <label class="field">Ceritakan kebutuhan Anda
+    <label class="field">Ceritakan kebutuhan Anda disini
         <textarea class="input" name="message" rows="4" placeholder="Misalnya: kami ingin pendaftaran santri baru bisa dilakukan secara online…" required>{{ old('message') }}</textarea>
         @error('message')<span class="error">{{ $message }}</span>@enderror
     </label>
