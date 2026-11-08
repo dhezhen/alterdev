@@ -16,13 +16,18 @@ class DashboardController extends Controller
     public function __invoke()
     {
         $today = today();
-        $startDate = $today->copy()->subDays(29)->toDateString();
+        $visitorPeriod = (int) request()->query('period', 30);
+        if (! in_array($visitorPeriod, [7, 30, 90], true)) {
+            $visitorPeriod = 30;
+        }
+
+        $startDate = $today->copy()->subDays($visitorPeriod - 1)->toDateString();
         $visitorsByDate = WebsiteVisit::query()
             ->whereBetween('visit_date', [$startDate, $today->toDateString()])
             ->selectRaw('visit_date, COUNT(*) as total')
             ->groupBy('visit_date')
             ->pluck('total', 'visit_date');
-        $visitorDays = collect(range(29, 0))->map(function (int $daysAgo) use ($today, $visitorsByDate) {
+        $visitorDays = collect(range($visitorPeriod - 1, 0))->map(function (int $daysAgo) use ($today, $visitorsByDate) {
             $date = $today->copy()->subDays($daysAgo);
 
             return [
@@ -34,6 +39,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', [
             'visitorDays' => $visitorDays,
+            'visitorPeriod' => $visitorPeriod,
             'visitorTotal' => $visitorDays->sum('count'),
             'visitorsToday' => (int) $visitorsByDate->get($today->toDateString(), 0),
             'visitorChartMax' => max(1, $visitorDays->max('count')),

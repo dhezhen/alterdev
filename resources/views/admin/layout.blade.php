@@ -29,11 +29,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>@yield('title', 'Dasbor') — Admin {{ $site['site_name'] }}</title>
+    <title>@yield('title', 'Dasbor') - Admin {{ $site['site_name'] }}</title>
     <link rel="icon" href="{{ asset('images/alterdev-icon.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=9">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v=10">
 </head>
 <body>
 <div class="admin">

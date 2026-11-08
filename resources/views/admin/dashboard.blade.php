@@ -4,17 +4,18 @@
 @section('content-class', 'content-wide')
 
 @section('content')
+@php($visitorLabelStep = $visitorPeriod === 7 ? 1 : ($visitorPeriod === 30 ? 5 : 15))
 <section class="panel visitor-panel" aria-labelledby="visitor-title">
     <div class="visitor-head">
         <div>
             <span class="visitor-eyebrow">Statistik website</span>
             <h2 id="visitor-title">Pengunjung website</h2>
-            <p>Tren pengunjung unik dalam 30 hari terakhir</p>
+            <p>Tren pengunjung unik dalam {{ $visitorPeriod }} hari terakhir</p>
         </div>
         <div class="visitor-totals">
             <div class="visitor-total-main">
                 <strong>{{ number_format($visitorTotal, 0, ',', '.') }}</strong>
-                <span>30 hari terakhir</span>
+                <span>{{ $visitorPeriod }} hari terakhir</span>
             </div>
             <div class="visitor-total-today">
                 <strong>{{ number_format($visitorsToday, 0, ',', '.') }}</strong>
@@ -23,20 +24,26 @@
         </div>
     </div>
 
+    <nav class="visitor-periods" aria-label="Pilih rentang waktu grafik">
+        @foreach ([7 => '7 hari', 30 => '30 hari', 90 => '90 hari'] as $period => $label)
+            <a href="{{ route('admin.dashboard', ['period' => $period]) }}"
+               @class(['visitor-period', 'is-active' => $visitorPeriod === $period])
+               @if ($visitorPeriod === $period) aria-current="page" @endif>{{ $label }}</a>
+        @endforeach
+    </nav>
+
     @if ($visitorTotal > 0)
-        <div class="visitor-chart-scroll">
-            <div class="visitor-chart" role="img" aria-label="Grafik pengunjung unik per hari selama 30 hari terakhir">
-                @foreach ($visitorDays as $day)
-                    @php $barHeight = max(4, round($day['count'] / $visitorChartMax * 104)); @endphp
-                    <div class="visitor-day" title="{{ $day['label'] }}: {{ $day['count'] }} pengunjung">
-                        <span class="visitor-bar" style="height: {{ $barHeight }}px"></span>
-                        <small>{{ $loop->first || $loop->last || $loop->iteration % 5 === 0 ? $day['label'] : '' }}</small>
-                    </div>
-                @endforeach
-            </div>
+        <div class="visitor-chart" role="img" aria-label="Grafik pengunjung unik per hari selama {{ $visitorPeriod }} hari terakhir" style="--visitor-days: {{ count($visitorDays) }}">
+            @foreach ($visitorDays as $day)
+                @php $barHeight = $day['count'] > 0 ? max(8, round($day['count'] / $visitorChartMax * 112)) : 3; @endphp
+                <div class="visitor-day" title="{{ $day['label'] }}: {{ $day['count'] }} pengunjung">
+                    <span @class(['visitor-bar', 'is-zero' => $day['count'] === 0]) style="--bar-height: {{ $barHeight }}px; animation-delay: {{ min($loop->index * 12, 720) }}ms"></span>
+                    <small>{{ $loop->first || $loop->last || $loop->index % $visitorLabelStep === 0 ? $day['label'] : '' }}</small>
+                </div>
+            @endforeach
         </div>
     @else
-        <div class="visitor-empty">Belum ada data. Pencatatan dimulai setelah fitur ini diaktifkan.</div>
+        <div class="visitor-empty">Belum ada data dalam {{ $visitorPeriod }} hari terakhir.</div>
     @endif
     <p class="visitor-note">Satu sesi browser dihitung sekali per hari. Kunjungan admin dan crawler umum tidak dihitung; data sebelum fitur ini diaktifkan tidak tersedia.</p>
 </section>
